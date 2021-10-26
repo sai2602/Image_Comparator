@@ -1,3 +1,5 @@
+************************************************************ Solution with Imaging_Interview.py ************************************************************
+
 1. What parameters you decided to use for the provided example dataset
 	-- For the contour area, I decided to take a threshold area of 400 (20px X 20px) as a reference to ignore contours
 	-- From the return metrics of "compare_frames_change_detection", 
@@ -36,3 +38,15 @@
 		
 		Other possibility: Iterate over pair of images, pre-process them, compare and delete one if found similar
 		This process might lead to latency since in every iteration, atleast one image is processed and since there is no hierarchy, a modular understanding of the system is difficult.
+		
+		
+		
+		
+		
+************************************************************ Solution with Other possibilities ************************************************************
+
+I was also reading about image comparison techniques and possible state-of-the-art-approaches.
+There were quite some interesting topics using feature extractors, histogram measures etc,
+One topic intrigued me and this was image comparison with SIFT (Scale Invariant Feature Transform) which performs feature matching.
+
+I implemented this SIFT based comparator out of interest and it is available in: https://github.com/sai2602/SIFT
