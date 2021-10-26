@@ -5,7 +5,7 @@ from os.path import join, exists
 from time import time, strftime, gmtime
 
 CONTOUR_AREA = 400.0
-THRESHOLD_AREA = 2000.0
+THRESHOLD_AREA = 1800.0
 
 # This value has to be changed to the specific root directory where the images are saved
 data_path = "C:\\Users\\saipa\\Desktop\\Dataset\\c23"
@@ -136,10 +136,11 @@ if __name__ == "__main__":
     # IMAGE COMPARATOR section created a list of indices signifying images that look similar
     # This list is looped through and corresponding images are deleted
 
-    print("Deleting duplicate images")
+    print("Deleting duplicate images\n")
     for delete_image_index in similar_image_list:
         delete_image = join(data_path, image_list[delete_image_index])
         if exists(delete_image):
             remove(delete_image)
+    print("Deleted a total of {}\n".format(len(similar_image_list)))
 
-    print(strftime("%H:%M:%S", gmtime(time() - start_time)))
+    print("Processing completed in: " + strftime("%H:%M:%S", gmtime(time() - start_time)))

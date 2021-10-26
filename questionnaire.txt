@@ -1,0 +1,38 @@
+1. What parameters you decided to use for the provided example dataset
+	-- For the contour area, I decided to take a threshold area of 400 (20px X 20px) as a reference to ignore contours
+	-- From the return metrics of "compare_frames_change_detection", 
+		I decided to use the cumulative area of contours averaged across the total number of contours (length of list containing contour boundary conditions)
+		
+
+2. How you found these values
+	-- As in my case, there were 2 unknowns and so so I had to make one value static and play around with the other parameter to decide on an optimum operating conditions
+	
+	-- Unknown 1: Contour area to ignore
+		Considered that any contour occupying an area of 400 (20px across height, 20px across width just for reference) can be neglected as noisy contours
+	
+	-- Unknown 2: Averaged contour area
+		Reference to compare similarities was to average out the effective contour area returned and threshold against a value and decide the similarity
+		Averaged area less than threshold area => similar images
+		Decision for the threshold value was done with cross validation approach where possible threshold values were applied and the most unique results yielding value was chosen
+		*Unique results in terms of visual appearance only
+		
+
+3. What amount of duplicates script found with these parameters
+	-- With the above mentioned configuration, a total of 368 (duplicates) / 116 (unique) images were found
+	
+	
+4. What you would suggest improving to make data collection of unique cases better
+	-- If the images were collected from a video stream, defining a small sampling rate (fetching frames that are temporally distant by a larger margin) will help get unique images
+	
+	
+5. Any other comments about imaging_interview.py or your solution
+	-- With respect the designed algorithm, I have created a pipelined architecture with 3 stages: Pre-processing, Comparison, Post-processing
+		Pre-processing: Does data preparation of converting to grayscale and cropping
+		Comparison: Compares the pre-processed images and accumulates a list of possible redundant images
+		Post-processing: Deleted the images mentioned in the list accumulated after the Comparison stage
+		
+		This approach of pipelined architecture will help create abstraction thereby making each stage as a stand-alone module and then create an interface between them.
+		I chose this approach as it gives a clear idea of input->processing->output
+		
+		Other possibility: Iterate over pair of images, pre-process them, compare and delete one if found similar
+		This process might lead to latency since in every iteration, atleast one image is processed and since there is no hierarchy, a modular understanding of the system is difficult.
